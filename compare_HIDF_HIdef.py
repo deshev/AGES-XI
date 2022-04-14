@@ -57,8 +57,8 @@ EStbl = Stbl[(Stbl['Vel'] > 9000) | (Stbl['Vel'] < 4000)]
 CHtbl = CStbl[CStbl['MHI'] > 9.25]
 EHtbl = EStbl[EStbl['MHI'] > 9.25]
 
-print('In the cluster we have {} and {} HI detected'.format(len(CStbl), len(CHtbl)))
-print('Elsewhere we have {} and {} HI detected\n'.format(len(EStbl), len(EHtbl)))
+print('In the cluster we have {} in total and {} HI detected'.format(len(CStbl), len(CHtbl)))
+print('Elsewhere we have {} in total and {} HI detected\n'.format(len(EStbl), len(EHtbl)))
 ###############################################################################
 # The number of bins
 Nb = 4
