@@ -81,6 +81,10 @@ for xVar in xVars:
     labels = iter(['A1367', 'Elsewhere'])
     
     for tbl in [CStbl, EStbl]:
+        # Why would you expect numpy functions to care about numpy masked arrays?!!!
+        tbl[xVar] = np.ma.filled(tbl[xVar], np.nan)
+        tbl['HIdef_ALL'] = np.ma.filled(tbl['HIdef_ALL'], np.nan)
+        
         # Bin the x-axis
         vvbins = np.array(calc_bins([tbl, xVar, Nb]))
         tbl['vvbins'] = np.digitize(tbl[xVar], bins = vvbins)
@@ -90,20 +94,28 @@ for xVar in xVars:
         label = next(labels)
         Xb = []; YbCD = []; dYbCD = []
         for i in range(1, len(vvbins)):
-            Xb.append(np.median(tbl[xVar][tbl['vvbins']==i]))
-            YbCD.append(np.mean(tbl['HIdef_ALL'][tbl['vvbins']==i]))
-            dYbCD.append(np.std(tbl['HIdef_ALL'][tbl['vvbins']==i]))
+            Xb.append(np.nanmedian(tbl[xVar][tbl['vvbins']==i]))
+            YbCD.append(np.nanmean(tbl['HIdef_ALL'][tbl['vvbins']==i]))
+            percentiles = [2.5,17,83,97.5] # [12.5,25,75,87.5] # [2.5,25,75,97.5]
+            for perce in percentiles:
+                dYbCD.append(np.nanpercentile(tbl['HIdef_ALL'][tbl['vvbins']==i], perce))
+
+        dYbCD = np.array(dYbCD).reshape(len(np.unique(tbl['vvbins'])), len(percentiles))
         YbCD = np.array(YbCD)
-        dYbCD = np.array(dYbCD)
-        ax.plot(Xb, YbCD, m, linestyle=l, color=c, label=label, zorder=1)
-        ax.fill_between(Xb, YbCD+dYbCD/2, YbCD-dYbCD/2, color=c, alpha=0.3, zorder=1)
-        ax.set_ylim([-0.44, 1.1])
+        
+        # Plot the mean
+        ax.plot(Xb, YbCD, m, linestyle=l, color=c, label=label, zorder=9)
+        # Plot the percentiles
+        for pp in range(int(len(percentiles)/2)):
+            ax.fill_between(Xb, dYbCD[:,pp], dYbCD[:,-(pp+1)], color=c, alpha=0.2, zorder=1)
+        
+        ax.set_ylim([-0.84, 1.5])
         ax.minorticks_on()
         ax.tick_params(axis='both', direction='in', which='both', right='on', top='on')
         if xVar == 'density':
             ax.legend(loc=2)
             ax.set_ylabel('{\sc Hi} deficiency')
-            ax.text(Xb[0], -0.35, len(tbl), color=c)
+            ax.text(Xb[0], -0.38, len(tbl), color=c)
             print(Xb[0])
 
         else:
@@ -150,4 +162,4 @@ for xVar in xVars:
     ax.set_xlabel(next(xlabels))
     n += 1
 plt.tight_layout(pad=2.0, h_pad=(0.0), w_pad=(0.0))
-plt.savefig(path+'compare_HIDF_HIdef.pdf')
+plt.savefig(path+'compare_HIDF_HIdefT.pdf')
