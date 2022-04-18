@@ -146,7 +146,7 @@ for xVar in xVars:
         Hh = np.histogram(Htbl[xVar], bins=vvbins)
         YbEF = (Sh[0]-Hh[0])/Sh[0]
 
-        dYbEF = np.sqrt(Sh[0]-Hh[0])/Sh[0]
+        dYbEF = 1.96*np.sqrt((YbEF*(1-YbEF))/Sh[0])
         ax.plot((Xb), YbEF, m, linestyle=l, color=c, zorder=3)
         ax.fill_between((Xb), y1=(YbEF)+dYbEF, y2=(YbEF)-dYbEF, color=c, alpha=0.3, zorder=3)
 
@@ -162,4 +162,54 @@ for xVar in xVars:
     ax.set_xlabel(next(xlabels))
     n += 1
 plt.tight_layout(pad=2.0, h_pad=(0.0), w_pad=(0.0))
-plt.savefig(path+'compare_HIDF_HIdefT.pdf')
+plt.savefig(path+'compare_HIDF_HIdef.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
