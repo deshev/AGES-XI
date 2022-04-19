@@ -115,7 +115,7 @@ for xVar in xVars:
         if xVar == 'density':
             ax.legend(loc=2)
             ax.set_ylabel('{\sc Hi} deficiency')
-            ax.text(Xb[0], -0.38, len(tbl), color=c)
+            ax.text(Xb[0], -0.78, len(tbl), color=c)
             print(Xb[0])
 
         else:
@@ -156,6 +156,8 @@ for xVar in xVars:
         ax.tick_params(axis='both', direction='in', which='both', right='on', top='on')
         if xVar == 'density':
             ax.set_ylabel('{\sc Hi} non-detected fraction')
+            ax.text(Xb[0], 0.18, str(len(tbl)-len(Htbl))+'/'+str(len(tbl)), color=c)
+            
         else:
             ax.set_yticklabels([])
 
