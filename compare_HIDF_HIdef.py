@@ -146,9 +146,11 @@ for xVar in xVars:
         Hh = np.histogram(Htbl[xVar], bins=vvbins)
         YbEF = (Sh[0]-Hh[0])/Sh[0]
 
-        dYbEF = 1.96*np.sqrt((YbEF*(1-YbEF))/Sh[0])
+        dYbEF2s = 1.96*np.sqrt((YbEF*(1-YbEF))/Sh[0])
+        dYbEF1s = 0.95*np.sqrt((YbEF*(1-YbEF))/Sh[0])
         ax.plot((Xb), YbEF, m, linestyle=l, color=c, zorder=3)
-        ax.fill_between((Xb), y1=(YbEF)+dYbEF, y2=(YbEF)-dYbEF, color=c, alpha=0.3, zorder=3)
+        ax.fill_between((Xb), y1=(YbEF)+dYbEF2s, y2=(YbEF)-dYbEF2s, color=c, alpha=0.2, zorder=3)
+        ax.fill_between((Xb), y1=(YbEF)+dYbEF1s, y2=(YbEF)-dYbEF1s, color=c, alpha=0.2, zorder=3)
 
         ax.set_ylim([0.15, 1.0])
         ax.set_xlim(xlims)
