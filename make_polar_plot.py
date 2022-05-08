@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr 28 09:01:06 2022
+Created on Mon May  2 10:40:00 2022
 @author: Boris Deshev
 
 Plot the distribution of objects in RA-Vel and Dec-Vel planes
@@ -141,10 +141,10 @@ DEZ_mask = np.where(DEZ_rfi_map==1)
 
 # The axes of each panel
 # Should be Left, Bottom, Width, Height ... and it almost is.
-axN = [[-1.49, 0.01, 3.5, 0.95],
-       [-1.63, 0.01, 3.5, 0.95],
-       [-1.28, 0.05, 3.5, 0.93],
-       [-1.025, 0.05, 3.5, 0.925]]
+axN = [[0.01, 0.01, 0.95, 1.5],
+       [0.01, 0.15, 0.95, 1.5],
+       [0.03, -0.195, 0.965, 1.5],
+       [0.03, -0.46, 0.96, 1.5]]
 
 # Which column contains the Y variable for different sources
 Ycol1 = ['RA', 'DEC', 'RA', 'DEC']
@@ -163,15 +163,17 @@ rmax = [10200, 10200, 19300, 19300]
 yticks = [1000, 1000, 10000, 10000]
 
 # Orientation of the separate panels
-tzl = ['S', 'S', 'N', 'N']
+tzl = ['N', 'N', 'S', 'S']
 
 # Used to align the Dec and RA panels
-offset = [0, 161.5, 0, 161.5]
+offset = np.array([0, 161.5, 0, 161.5])
+offset+=90
 
 # Label on the angular axis
 xlabel = ['R.A. (J2000)', 'Dec. (J2000)', 'R.A. (J2000)', 'Dec. (J2000)']
 # Used for locating the above axis label
-xlab_offset = [1.03, 1.03, 1.015, 1.015]
+xlab_offset = [1.03, 1.03, 1.01, 1.01]
+xlab_rot = [270,270,90,90]
 
 # The mask and coordinate grid for the RFI masks in the two planes
 mask = [RAZ_mask, DEZ_mask, RAZ_mask, DEZ_mask]
@@ -189,7 +191,7 @@ POC_lab = ['','', 'potential \noptical \ncounterpart', '']
 HIlab = [['',''],['',''],['certain', 'uncertain'],['','']]
 
 
-fig = plt.figure(figsize=(20,30))
+fig = plt.figure(figsize=(30,20))
 for n in range(4):
     ax = plt.axes(axN[n], polar=True) 
 
@@ -208,24 +210,24 @@ for n in range(4):
     ax.plot(np.deg2rad(HItbl[Ycol2[n]][HItbl['flag']=='1']), HItbl['Vel_HI'][HItbl['flag']=='1'], 'o', mec='0.3', mfc='None', ms=8, zorder=3, label=HIlab[n][1])
 
     if n == 0:
-        ax.text(np.deg2rad(HItbl[Ycol2[n]].max()+6.5), rmin[n]+4900, '$cz$ [km s$^{-1}$]',
-                rotation = 95, ha = 'center', va = 'top', fontsize=36)
+        ax.text(np.deg2rad(HItbl[Ycol2[n]].max()+8.0), rmin[n]+4500, '$cz$ [km s$^{-1}$]',
+                rotation = 5, ha = 'center', va = 'top', fontsize=36)
     elif n == 2:
         # Make the two legends
         handles, labels = ax.get_legend_handles_labels()
-        first_legend = ax.legend(handles[2:], labels[2:], title = '{\sc Hi} detections', loc='upper center', bbox_to_anchor=(0.81, 0.7), fancybox=True, shadow=True, fontsize=24)
-        second_legend = ax.legend(handles[:2], labels[:2], loc='lower center', bbox_to_anchor=(0.81, 0.7), fancybox=True, shadow=True, fontsize=24)
+        first_legend = ax.legend(handles[2:], labels[2:], title = '{\sc Hi} detections', loc='upper center', bbox_to_anchor=(0.75, 0.23), fancybox=True, shadow=True, fontsize=24)
+        second_legend = ax.legend(handles[:2], labels[:2], loc='lower center', bbox_to_anchor=(0.91, 0.15), fancybox=True, shadow=True, fontsize=24)
         ax.add_artist(first_legend)
 
         # Take care of the colorbar
-        cbaxes = fig.add_axes([0.9, 0.15, 0.02, 0.4]) 
-        cbar = plt.colorbar(mappable, cax = cbaxes)  
-        cbar.set_label(r'log($\rho$) [Mpc$^{-3}$]', fontsize=28, rotation=270, labelpad=45)
+        cbaxes = fig.add_axes([0.1, 0.1, 0.5, 0.02]) 
+        cbar = plt.colorbar(mappable, cax = cbaxes, orientation='horizontal')  
+        cbar.set_label(r'log($\rho$) [Mpc$^{-3}$]', fontsize=28, rotation=0)#, labelpad=25)
         cbar.ax.yaxis.set_label_position('right')
 
         # Axis label
-        ax.text(np.deg2rad(HItbl[Ycol2[n]].max()+6), rmin[n]+4300, '$cz$ [km s$^{-1}$]',
-                rotation = -85, ha = 'center', va = 'top', fontsize=36)
+        ax.text(np.deg2rad(HItbl[Ycol2[n]].max()+5.5), rmin[n]+4700, '$cz$ [km s$^{-1}$]',
+                rotation = 5, ha = 'center', va = 'top', fontsize=36)
 
     ax.set_thetamin(theta_min[n])
     ax.set_thetamax(theta_max[n])
@@ -233,12 +235,62 @@ for n in range(4):
     ax.set_rmin(rmin[n])
     ax.set_rticks(np.arange(yticks[n], rmax[n], 1000))
 
+    if n in [0,1]:
+        for label in ax.get_xticklabels():
+            label.set_horizontalalignment("left")
+
     ax.tick_params(labelleft=tick_P[n][0], labelright=tick_P[n][1], labeltop=tick_P[n][2], labelbottom=tick_P[n][3])
     
     ax.set_rorigin(0)
     ax.set_theta_zero_location(loc=tzl[n], offset=offset[n])
-    ax.text(np.deg2rad(HItbl[Ycol2[n]].mean()), rmax[n]*xlab_offset[n], xlabel[n], ha = 'center', va = 'top', fontsize=24)
+    ax.text(np.deg2rad(HItbl[Ycol2[n]].mean()), rmax[n]*xlab_offset[n], xlabel[n], rotation=xlab_rot[n], ha = 'center', va = 'center', fontsize=24)
 
 plt.tight_layout()
-plt.savefig(path+'final_analysis/polar_plot_M.jpg', dpi=200)
+plt.savefig(path+'final_analysis/polar_plot_M90.jpg', dpi=200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
