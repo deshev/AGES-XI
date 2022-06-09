@@ -21,7 +21,7 @@ matplotlib.rcParams['text.usetex'] = True
 #r'log M$_{\textrm{\sc Hi}}$'
 ######################################
 
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 ###########################################################################
 # Comparison with ALFALFA
 tbl = Table.read(path+'final_analysis/AGES_ALFALFA_match1.5arcmin.csv')

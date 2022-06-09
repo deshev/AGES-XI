@@ -1,5 +1,6 @@
 #!/usr/bin/python
 """
+@author: Boris Deshev
 This will calculate bins with (semi-)equal number of points
 
 It requires three parameters to be provided by the user:

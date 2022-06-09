@@ -172,7 +172,7 @@ def calc_deficiency(tbl):
 ############   MAIN   ##################
 ########################################
 ########################################
-path = '/home/tazio/works/2020/a1367/final_analysis/'
+path = '/'
 tbl = Table.read(path+'mpa_jhu_AGES.fits')
 print('tbl',len(tbl))
     

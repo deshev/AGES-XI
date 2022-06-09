@@ -24,7 +24,7 @@ matplotlib.rcParams['text.usetex'] = True
 #r'log M$_{\textrm{\sc Hi}}$'
 ######################################
 
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 tbl = Table.read(path+'A1367_HItable_v8.8_wt.txt', format='ascii.commented_header')
 
 def give_f(w):

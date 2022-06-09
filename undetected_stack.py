@@ -346,7 +346,7 @@ def plot_individual_spectra(tbl, figname = None):
 # This is the channel width in km/s
 ch = 5.5
 
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 #############################
 # The table with all SDSS objects within the HI survey and cluster velocity range
 Stbl = Table.read(path+'final_analysis/mpa_jhu_AGES.fits')

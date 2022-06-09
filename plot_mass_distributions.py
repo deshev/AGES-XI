@@ -42,7 +42,7 @@ def running_median(tbl, medcol, sortcol):
     return X, Y, dY
 ######################################
 
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 # Completeness limits
 MstLim = 9.75
 MhiLim = 9.25

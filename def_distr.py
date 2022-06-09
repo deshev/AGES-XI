@@ -25,7 +25,7 @@ matplotlib.rcParams['text.usetex'] = True
 ######################################
 
 # Read in the table
-path = '/home/tazio/works/2020/a1367/final_analysis/'
+path = '/'
 tbl = Table.read(path+'mpa_jhu_AGES.fits')
 
 # Split the sample into cluster, foreground and background

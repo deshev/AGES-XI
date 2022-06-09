@@ -112,7 +112,7 @@ def plot_rfi():
 #############################
 #############################
 # # Open the tables to plot
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 # Table with HI detections
 HItbl = Table.read(path+'A1367_HItable_v8.8_wt.txt', format='ascii.commented_header')
 # Table with MPA-JHU objects in the AGES volume

@@ -35,7 +35,7 @@ matplotlib.rcParams['text.usetex'] = True
 #r'log M$_{\textrm{\sc Hi}}$'
 ######################################
 
-path = '/home/tazio/works/2020/a1367/'
+path = '/'
 # The table with the HI detections
 HItbl = Table.read(path+'A1367_HItable_v8.8_wt.txt', format='ascii.commented_header')
 print('tbl',len(HItbl))

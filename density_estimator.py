@@ -45,7 +45,7 @@ def vol(vor,p):
 #--------------------------------------
 
 ################################################
-path = '/home/tazio/works/2020/ALFALFA_data/'
+path = '/'
 
 # The table
 t5 = Table.read(path+'mpa_jhu_sky_overlap.fits')
@@ -111,9 +111,6 @@ for i,p in enumerate(vor.points):
 # Write another column with the density
 t5['density'] = 1 / (t5['vorvol'])
 
-#--------------------------------------
-
-#t5.write(path+'/final_analysis/mpa_jhu_sky_overlap_vor_den_Mst9.75p_comovingD_v2.fits', overwrite=True)
 
 
 

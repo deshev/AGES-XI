@@ -34,7 +34,7 @@ matplotlib.rcParams['text.usetex'] = True
        
 ###############################################################################
 ###############################################################################
-path = '/home/tazio/works/2020/a1367/final_analysis/'
+path = '/'
 Stbl = Table.read(path+'mpa_jhu_AGES.fits')
 
 # The table with all SDSS objects within the HI survey and cluster velocity range
